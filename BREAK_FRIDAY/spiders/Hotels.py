@@ -12,13 +12,13 @@ class HotelsSpider(scrapy.Spider):
     def __init__(self):
         print("\nINIT HOTELS\n")
         start_urls = []
-        countries = [("pt_br", "brasil")]
-        # countries = countries_for_language("pt_br")
+        # countries = [("pt_br", "brasil")]
+        countries = countries_for_language("pt_br")
         random.shuffle(countries)
         for country in countries:
             options = [
                 f"https://www.hurb.com/br/search/hotels?q={country[1]}&tab=hotels&rooms=2&page={i}"
-                for i in range(1, 2)
+                for i in range(1, 100)
             ]
             start_urls.extend(options)
         self.start_urls = start_urls
@@ -27,8 +27,7 @@ class HotelsSpider(scrapy.Spider):
         print("HOTELS PAGE: ", response.url)
         options = []
         for div in response.css("a"):
-            hotel = div.css(".hrc-1_8b9").getall()
-            print(div.get())
+            hotel = div.css(".Hotels_HotelCard__2zaAH").getall()
             if hotel:
                 url = div.css("a::attr(href)").extract_first()
                 options.append(url)

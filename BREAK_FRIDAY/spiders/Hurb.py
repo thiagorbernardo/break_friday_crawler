@@ -9,14 +9,13 @@ class HurbSpider(scrapy.Spider):
     allowed_domains = ['hurb.com']
     start_urls = []
     # start_urls = ['https://www.hurb.com/br']
-    # allowed_domains = ["http://127.0.0.1:5500"]
     # start_urls = ["http://127.0.0.1:5500/hurb.html"]
 
     def __init__(self):
         print("\nINIT PACKAGES\n")
         start_urls = []
-        countries = [("pt_br", "brasil")]
-        # countries = countries_for_language("pt_br")
+        # countries = [("pt_br", "brasil")]
+        countries = countries_for_language("pt_br")
         random.shuffle(countries)
         for country in countries:
             options = [
@@ -30,7 +29,7 @@ class HurbSpider(scrapy.Spider):
         print("PACKAGES PAGE: ", response.url)
         options = []
         for div in response.css("a"):
-            package = div.css(".hrc-1_8b9").getall()
+            package = div.css(".Packages_PackageCard__2lqTN").getall()
             if package:
                 url = div.css("a::attr(href)").extract_first()
                 options.append(url)
